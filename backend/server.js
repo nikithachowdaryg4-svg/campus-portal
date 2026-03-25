@@ -30,7 +30,8 @@ app.use('/api/student', require('./routes/studentRoutes'));
 app.use('/api/events', require('./routes/eventRoutes'));
 
 // Handle SPA routing - serve index.html for non-API routes
-app.get('*', (req, res) => {
+// Note: Using regex instead of '*' because Express v5 doesn't support bare wildcards
+app.get(/(.*)/, (req, res) => {
   if (!req.path.startsWith('/api')) {
     res.sendFile(path.join(frontendPath, 'index.html'));
   } else {
